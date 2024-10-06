@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEXA - Login with Gmail</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Login with Gmail</title>
+    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-    <div class="circle"></div>
+    <h1>Login with Gmail</h1>
     <button id="login-button">Login with Google</button>
-    <div class="description">
-        <p>FEXA: Automating customer feedback analysis with seamless integration.</p>
-    </div>
-    <div class="copyright">
-        <p>&copy; 2024 FEXA. All rights reserved.</p>
-    </div>
 
-    <script src="https://apis.google.com/js/api.js"></script>
     <script>
         const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email';
         
