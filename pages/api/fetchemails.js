@@ -4,7 +4,7 @@ const fs = require('fs');
 // Add your credentials here later
 const CLIENT_ID = '998151195957-ria17lsdg2er7f4j3m6meitpsof9gbqm.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'https://fexa.vercel.app/api/callback';
+const REDIRECT_URI = 'https://fexa.vercel.app/api/callback/';
 const REFRESH_TOKEN = 'YOUR_REFRESH_TOKEN';
 
 const oAuth2Client = new google.auth.OAuth2(
