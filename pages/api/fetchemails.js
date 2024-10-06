@@ -2,8 +2,8 @@ const { google } = require('googleapis');
 const fs = require('fs');
 
 // Add your credentials here later
-const CLIENT_ID = '998151195957-ria17lsdg2er7f4j3m6meitpsof9gbqm.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
+const CLIENT_ID = '998151195957-65s2khsrr16mqlta7ddau30up4bf30hb.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'https://fexa.vercel.app/api/callback/';
 const REFRESH_TOKEN = 'YOUR_REFRESH_TOKEN';
 
