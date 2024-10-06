@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gmail Login</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #loginButton {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4285F4;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #loginButton:hover {
+            background-color: #357AE8;
+        }
+    </style>
     <script src="https://apis.google.com/js/api.js" async defer></script>
     <script>
         function initClient() {
@@ -20,8 +43,8 @@
         function handleAuthClick() {
             gapi.auth2.getAuthInstance().signIn().then((user) => {
                 console.log("User signed in: ", user);
-                // Redirect to dashboard after successful login
-                window.location.href = 'dash.html'; // Ensure dash.html exists in your public folder
+                // Redirect to dash.html after successful login
+                window.location.href = 'dash.html';
             }).catch((error) => {
                 console.error("Error signing in: ", error);
             });
