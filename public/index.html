@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEXA - Feedback Extraction and Analysis</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to FEXA</h1>
-        <p>Automate your customer feedback processing!</p>
-        <button id="loginButton">Login with Gmail</button>
-        <div id="feedbackDisplay" class="feedback-display"></div>
-    </div>
+    <title>Gmail Login</title>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script>
+        function initClient() {
+            gapi.load('client:auth2', () => {
+                gapi.auth2.init({
+                    client_id: 'YOUR_CLIENT_ID',
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
+                }).then(() => {
+                    console.log("GAPI initialized");
+                });
+            });
+        }
 
-    <script src="app.js"></script>
+        function handleAuthClick() {
+            gapi.auth2.getAuthInstance().signIn().then((user) => {
+                console.log("User signed in: ", user);
+                // Handle signed-in user
+            }).catch((error) => {
+                console.error("Error signing in: ", error);
+            });
+        }
+    </script>
+</head>
+<body onload="initClient()">
+    <h1>Login with Gmail</h1>
+    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
 </body>
 </html>
