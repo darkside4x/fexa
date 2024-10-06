@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS -->
     <script src="https://apis.google.com/js/api.js" async defer></script>
     <script>
+        let isUserSignedIn = false; // Track user's sign-in status
+
         function initClient() {
             gapi.load('client:auth2', () => {
                 gapi.auth2.init({
@@ -14,6 +16,11 @@
                     scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
                 }).then(() => {
                     console.log("GAPI initialized");
+                    // Check if user is already signed in
+                    isUserSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+                    if (isUserSignedIn) {
+                        redirectToDashboard(); // Redirect if already signed in
+                    }
                 }).catch((error) => {
                     console.error("Error initializing GAPI: ", error);
                 });
@@ -23,11 +30,18 @@
         function handleAuthClick() {
             gapi.auth2.getAuthInstance().signIn().then((user) => {
                 console.log("User signed in: ", user);
-                // Handle signed-in user
-                window.location.href = "dash.html"; // Redirect to dashboard
+                isUserSignedIn = true; // Update sign-in status
+                redirectToDashboard(); // Redirect to dashboard
             }).catch((error) => {
                 console.error("Error signing in: ", error);
             });
+        }
+
+        function redirectToDashboard() {
+            console.log("Redirecting to dashboard...");
+            setTimeout(() => {
+                window.location.href = "dash.html"; // Redirect to dashboard
+            }, 1000); // Delay for 1 second before redirecting
         }
     </script>
 </head>
