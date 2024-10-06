@@ -3,39 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Gmail</title>
-    <script src="https://apis.google.com/js/api.js"></script>
-</head>
-<body>
-    <h1>Login with Gmail</h1>
-    <button id="login-button">Login with Google</button>
-
+    <title>Gmail Login</title>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
     <script>
-        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email';
-        
-        function handleClientLoad() {
-            gapi.load('client:auth2', initClient);
-        }
-
         function initClient() {
-            gapi.auth2.init({
-                client_id: '998151195957-65s2khsrr16mqlta7ddau30up4bf30hb.apps.googleusercontent.com', // Replace with your Client ID
-                scope: SCOPES
-            }).then(() => {
-                document.getElementById('login-button').onclick = handleAuthClick;
+            gapi.load('client:auth2', () => {
+                gapi.auth2.init({
+                    client_id: 'YOUR_CLIENT_ID',
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
+                }).then(() => {
+                    console.log("GAPI initialized");
+                });
             });
         }
 
         function handleAuthClick() {
-            gapi.auth2.getAuthInstance().signIn().then(() => {
-                console.log('User signed in');
-                // Handle successful login
+            gapi.auth2.getAuthInstance().signIn().then((user) => {
+                console.log("User signed in: ", user);
+                // Handle signed-in user
             }).catch((error) => {
-                console.error('Error during login:', error);
+                console.error("Error signing in: ", error);
             });
         }
-
-        window.onload = handleClientLoad;
     </script>
+</head>
+<body onload="initClient()">
+    <h1>Login with Gmail</h1>
+    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
 </body>
 </html>
