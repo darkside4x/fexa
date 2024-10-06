@@ -1,75 +1,41 @@
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #f1c40f, #e67e22);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    font-family: 'Arial', sans-serif;
-}
-
-.container {
-    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background-color: black;
     color: white;
-    animation: fadeIn 1s ease-in-out;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: url('https://cdn2.iconfinder.com/data/icons/font-awesome/1792/cursor-512.png'), auto; /* Custom cursor */
 }
 
 h1 {
-    font-size: 3em;
     margin-bottom: 20px;
 }
 
-p {
-    font-size: 1.5em;
-    margin-bottom: 30px;
+.g-signin2 {
+    margin-top: 20px;
 }
 
-button {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
+.description {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.g-signin2 > div {
+    background-color: #4285F4; /* Google blue */
     border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #3498db;
+.g-signin2 > div:hover {
+    background-color: #357AE8; /* Darker blue on hover */
 }
 
-.feedback-display {
-    margin-top: 30px;
-    font-size: 1.2em;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
