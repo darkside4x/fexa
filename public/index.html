@@ -3,32 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gmail Login</title>
-    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <title>FEXA - Login with Gmail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: black;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: url('path/to/your/logo.png') no-repeat center center; /* Replace with your image path */
+            background-size: cover;
+            transition: background-color 0.3s;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .description, .copyright {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        /* Gradient effect on cursor */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            pointer-events: none;
+            transition: background 0.3s;
+        }
+
+        body:hover::before {
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="circle"></div>
+    <button id="login-button">Login with Google</button>
+    <div class="description">
+        <p>FEXA: Automating customer feedback analysis with seamless integration.</p>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2024 FEXA. All rights reserved.</p>
+    </div>
+
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
+        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email';
+        
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
         function initClient() {
-            gapi.load('client:auth2', () => {
-                gapi.auth2.init({
-                    client_id: 'YOUR_CLIENT_ID',
-                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
-                }).then(() => {
-                    console.log("GAPI initialized");
-                });
+            gapi.auth2.init({
+                client_id: 'YOUR_CLIENT_ID', // Replace with your Client ID
+                scope: SCOPES
+            }).then(() => {
+                document.getElementById('login-button').onclick = handleAuthClick;
             });
         }
 
         function handleAuthClick() {
-            gapi.auth2.getAuthInstance().signIn().then((user) => {
-                console.log("User signed in: ", user);
-                // Handle signed-in user
+            gapi.auth2.getAuthInstance().signIn().then(() => {
+                console.log('User signed in');
+                // Handle successful login
             }).catch((error) => {
-                console.error("Error signing in: ", error);
+                console.error('Error during login:', error);
             });
         }
+
+        window.onload = handleClientLoad;
     </script>
-</head>
-<body onload="initClient()">
-    <h1>Login with Gmail</h1>
-    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
 </body>
 </html>
