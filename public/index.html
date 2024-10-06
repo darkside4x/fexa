@@ -26,9 +26,9 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: url('path/to/your/logo.png') no-repeat center center; /* Replace with your image path */
+            background: url('/logo.png') no-repeat center center; /* Replace with your image path */
             background-size: cover;
-            transition: background-color 0.3s;
+            position: relative;
             z-index: 10; /* Ensure the circle is above other elements */
         }
 
@@ -54,7 +54,7 @@
             opacity: 0.8;
         }
 
-        /* Rotating gradient effect */
+        /* Gradient effect near the cursor */
         .gradient {
             position: absolute;
             top: 0;
@@ -63,22 +63,14 @@
             bottom: 0;
             background: radial-gradient(circle, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5));
             pointer-events: none;
-            animation: rotateGradient 5s linear infinite; /* Animation for rotation */
             z-index: 1; /* Ensure it's below other elements */
-        }
-
-        @keyframes rotateGradient {
-            0% {
-                transform: scale(1) translate(-50%, -50%);
-            }
-            100% {
-                transform: scale(1.5) translate(-50%, -50%) rotate(360deg);
-            }
+            opacity: 0; /* Start with no visibility */
+            transition: opacity 0.3s; /* Smooth transition for visibility */
         }
     </style>
 </head>
 <body>
-    <div class="gradient"></div> <!-- Rotating gradient background -->
+    <div class="gradient"></div> <!-- Gradient effect -->
     <div class="circle"></div>
     <button id="login-button">Login with Google</button>
     <div class="description">
@@ -113,6 +105,19 @@
                 console.error('Error during login:', error);
             });
         }
+
+        // Mouse movement event listener
+        document.addEventListener('mousemove', (e) => {
+            const gradient = document.querySelector('.gradient');
+            gradient.style.opacity = '1'; // Show gradient on mouse move
+            gradient.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5))`;
+
+            // Hide gradient if mouse leaves the viewport
+            clearTimeout(gradient.timer);
+            gradient.timer = setTimeout(() => {
+                gradient.style.opacity = '0'; // Hide gradient after delay
+            }, 300); // Adjust delay as needed
+        });
 
         window.onload = handleClientLoad;
     </script>
