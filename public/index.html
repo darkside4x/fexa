@@ -29,15 +29,15 @@
         }
 
         function handleAuthClick() {
-            gapi.auth2.getAuthInstance().signIn().then((user) => {
-                console.log("User signed in: ", user);
-                isUserSignedIn = true; // Update sign-in status
-                redirectToDashboard(); // Redirect to dashboard
-            }).catch((error) => {
-                console.error("Error signing in: ", error);
-                displayErrorMessage("Sign-in failed. Please try again."); // Display error message
-            });
-        }
+    gapi.auth2.getAuthInstance().signIn().then((user) => {
+        console.log("User signed in: ", user);
+        window.location.href = "dash.html"; // Redirect to dashboard
+    }).catch((error) => {
+        console.error("Error signing in: ", error);
+        alert(`Sign-in failed: ${error.message}`); // Alert with error message
+    });
+}
+
 
         function redirectToDashboard() {
             console.log("Redirecting to dashboard...");
