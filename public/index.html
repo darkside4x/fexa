@@ -3,26 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Cursor Example</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
-            // You can further process the user's data here
+    <title>FEXA - Login with Gmail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: black;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            cursor: none; /* Hide default cursor */
         }
-    </script>
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: url('path/to/your/logo.png') no-repeat center center; /* Replace with your image path */
+            background-size: cover;
+            transition: background-color 0.3s;
+            z-index: 10; /* Ensure the circle is above other elements */
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .description, .copyright {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        /* Rotating gradient effect */
+        .gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5));
+            pointer-events: none;
+            animation: rotateGradient 5s linear infinite; /* Animation for rotation */
+            z-index: 1; /* Ensure it's below other elements */
+        }
+
+        @keyframes rotateGradient {
+            0% {
+                transform: scale(1) translate(-50%, -50%);
+            }
+            100% {
+                transform: scale(1.5) translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Our App!</h1>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-
+    <div class="gradient"></div> <!-- Rotating gradient background -->
+    <div class="circle"></div>
+    <button id="login-button">Login with Google</button>
     <div class="description">
-        <p>Connecting you to automated solutions!</p>
+        <p>FEXA: Automating customer feedback analysis with seamless integration.</p>
     </div>
+    <div class="copyright">
+        <p>&copy; 2024 FEXA. All rights reserved.</p>
+    </div>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email';
+        
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
+        function initClient() {
+            gapi.auth2.init({
+                client_id: 'YOUR_CLIENT_ID', // Replace with your Client ID
+                scope: SCOPES
+            }).then(() => {
+                document.getElementById('login-button').onclick = handleAuthClick;
+            });
+        }
+
+        function handleAuthClick() {
+            gapi.auth2.getAuthInstance().signIn().then(() => {
+                console.log('User signed in');
+                // Handle successful login
+            }).catch((error) => {
+                console.error('Error during login:', error);
+            });
+        }
+
+        window.onload = handleClientLoad;
+    </script>
 </body>
 </html>
