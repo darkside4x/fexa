@@ -4,64 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS -->
-    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to your Gmail Dashboard</h1>
+    <div id="email-list">
+        <!-- Emails will be displayed here -->
+    </div>
     <script>
-        function initClient() {
-            gapi.load('client:auth2', () => {
-                gapi.auth2.init({
-                    client_id: 'YOUR_CLIENT_ID', // Replace with your client ID
-                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
-                }).then(() => {
-                    loadEmails(); // Call the function to load emails
-                });
-            });
-        }
-
+        // Use gapi.client.gmail API to list emails
         function loadEmails() {
             gapi.client.gmail.users.messages.list({
                 userId: 'me',
-                maxResults: 10 // Adjust as needed
+                maxResults: 10
             }).then(response => {
                 const messages = response.result.messages;
-                const emailListDiv = document.getElementById('emailList');
-                
-                if (messages && messages.length > 0) {
-                    messages.forEach(message => {
-                        // Fetch email details
-                        fetchEmailDetails(message.id);
-                    });
-                } else {
-                    emailListDiv.innerHTML = '<p>No emails found.</p>';
-                }
+                const emailListDiv = document.getElementById('email-list');
+                messages.forEach(message => {
+                    const emailItem = document.createElement('div');
+                    emailItem.textContent = `Message ID: ${message.id}`;
+                    emailListDiv.appendChild(emailItem);
+                });
             }).catch(error => {
                 console.error("Error loading emails: ", error);
             });
         }
 
-        function fetchEmailDetails(messageId) {
-            gapi.client.gmail.users.messages.get({
-                userId: 'me',
-                id: messageId
-            }).then(response => {
-                const email = response.result;
-                const emailListDiv = document.getElementById('emailList');
-                emailListDiv.innerHTML += `<div><strong>${email.snippet}</strong></div>`; // Display email snippet
-            }).catch(error => {
-                console.error("Error fetching email details: ", error);
+        function initGmailAPI() {
+            gapi.load('client', () => {
+                gapi.client.init({
+                    apiKey: 'YOUR_API_KEY',
+                    clientId: '998151195957-65s2khsrr16mqlta7ddau30up4bf30hb.apps.googleusercontent.com',
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly'
+                }).then(() => {
+                    loadEmails();
+                });
             });
         }
 
-        function handleLogout() {
-            gapi.auth2.getAuthInstance().signOut().then(() => {
-                window.location.href = "index.html"; // Redirect to login page
-            });
-        }
+        document.addEventListener("DOMContentLoaded", initGmailAPI);
     </script>
-</head>
-<body onload="initClient()">
-    <h1>Your Emails</h1>
-    <div id="emailList"></div>
-    <button onclick="handleLogout()">Logout</button>
 </body>
 </html>
