@@ -65,3 +65,11 @@ footer p {
     margin: 0;
     font-size: 14px;
 }
+
+/* Add this to your existing styles.css */
+
+.error {
+    color: red; /* Color for the error message */
+    margin-top: 10px;
+    font-size: 16px; /* Size of the error message text */
+}
