@@ -22,7 +22,7 @@
                         redirectToDashboard(); // Redirect if already signed in
                     }
                 }).catch((error) => {
-                    redirectToDashboard();
+                    console.error("Error initializing GAPI: ", error);
                 });
             });
         }
@@ -33,7 +33,8 @@
                 isUserSignedIn = true; // Update sign-in status
                 redirectToDashboard(); // Redirect to dashboard
             }).catch((error) => {
-                redirectToDashboard();
+                console.error("Error signing in: ", error);
+                displayErrorMessage("Sign-in failed. Please try again."); // Show error message
             });
         }
 
@@ -43,17 +44,24 @@
                 window.location.href = "dash.html"; // Redirect to dashboard
             }, 1000); // Delay for 1 second before redirecting
         }
+
+        function displayErrorMessage(message) {
+            const errorDiv = document.getElementById("error-message");
+            errorDiv.innerText = message;
+            errorDiv.style.display = "block"; // Show the error message
+        }
     </script>
 </head>
 <body onload="initClient()">
     <div class="container">
-        <img src="logo.png" alt="App Icon" class="icon"> <!-- Central Icon -->
+        <img src="your-icon.png" alt="App Icon" class="icon"> <!-- Central Icon -->
         <h1>Login with Gmail</h1>
         <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
+        <div id="error-message" class="error" style="display: none;"></div> <!-- Error message div -->
     </div>
 
     <footer>
-        <p>&copy; 🚩🏁2024 FEXA | Techfest IIT- Bombay 🌍. All rights reserved. 🏁🚩</p>
+        <p>🚩🏁 &copy; 2024 FEXA | Techfest IIT- Bombay 🌍. All rights reserved. 🏁🚩</p>
     </footer>
 </body>
 </html>
