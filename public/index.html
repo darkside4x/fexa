@@ -3,14 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Gmail</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="main.js" defer></script>
+    <title>Gmail Login</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS -->
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script>
+        let isUserSignedIn = false; // Track user's sign-in status
+
+        function initClient() {
+            gapi.load('client:auth2', () => {
+                gapi.auth2.init({
+                    client_id: '998151195957-65s2khsrr16mqlta7ddau30up4bf30hb.apps.googleusercontent.com',
+                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
+                }).then(() => {
+                    console.log("GAPI initialized");
+                    // Check if user is already signed in
+                    const authInstance = gapi.auth2.getAuthInstance();
+                    isUserSignedIn = authInstance.isSignedIn.get();
+                    if (isUserSignedIn) {
+                        redirectToDashboard(); // Redirect if already signed in
+                    }
+                }).catch((error) => {
+                    console.error("Error initializing GAPI: ", error);
+                });
+            });
+        }
+
+        function handleAuthClick() {
+            gapi.auth2.getAuthInstance().signIn().then((user) => {
+                console.log("User signed in: ", user);
+                isUserSignedIn = true; // Update sign-in status
+                redirectToDashboard(); // Redirect to dashboard
+            }).catch((error) => {
+                console.error("Error signing in: ", error);
+                displayErrorMessage("Sign-in failed. Please try again."); // Display error message
+            });
+        }
+
+        function redirectToDashboard() {
+            console.log("Redirecting to dashboard...");
+            setTimeout(() => {
+                window.location.href = "dash.html"; // Redirect to dashboard
+            }, 1000); // Delay for 1 second before redirecting
+        }
+
+        function displayErrorMessage(message) {
+            const errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.innerText = message; // Set the error message
+            errorMessageDiv.style.display = 'block'; // Show the error message div
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Login with Gmail</h1>
-        <button id="loginButton" class="btn">Login with Gmail</button>
-    </div>
+<body onload="initClient()">
+    <h1>Login with Gmail</h1>
+    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
+    <div id="errorMessage" style="display:none; color:red; margin-top:20px;"></div> <!-- Error message div -->
 </body>
 </html>
