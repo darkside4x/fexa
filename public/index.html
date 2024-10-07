@@ -16,7 +16,6 @@
                     scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
                 }).then(() => {
                     console.log("GAPI initialized");
-                    // Check if user is already signed in
                     const authInstance = gapi.auth2.getAuthInstance();
                     isUserSignedIn = authInstance.isSignedIn.get();
                     if (isUserSignedIn) {
@@ -35,7 +34,6 @@
                 redirectToDashboard(); // Redirect to dashboard
             }).catch((error) => {
                 console.error("Error signing in: ", error);
-                displayErrorMessage("Sign-in failed. Please try again."); // Display error message
             });
         }
 
@@ -45,17 +43,17 @@
                 window.location.href = "dash.html"; // Redirect to dashboard
             }, 1000); // Delay for 1 second before redirecting
         }
-
-        function displayErrorMessage(message) {
-            const errorMessageDiv = document.getElementById('errorMessage');
-            errorMessageDiv.innerText = message; // Set the error message
-            errorMessageDiv.style.display = 'block'; // Show the error message div
-        }
     </script>
 </head>
 <body onload="initClient()">
-    <h1>Login with Gmail</h1>
-    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
-    <div id="errorMessage" style="display:none; color:red; margin-top:20px;"></div> <!-- Error message div -->
+    <div class="container">
+        <img src="your-icon.png" alt="App Icon" class="icon"> <!-- Central Icon -->
+        <h1>Login with Gmail</h1>
+        <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Your App Name. All rights reserved.</p>
+    </footer>
 </body>
 </html>
