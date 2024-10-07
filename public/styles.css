@@ -1,12 +1,31 @@
+/* Reset default padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: black;
     color: white;
     text-align: center;
     font-family: Arial, sans-serif;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    flex-grow: 1;
+}
+
+h1 {
+    margin: 20px 0;
 }
 
 button {
@@ -20,8 +39,29 @@ button {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-h1 {
+button:hover {
+    background-color: #45a049;
+}
+
+/* Icon styling */
+.icon {
+    width: 150px; /* Adjust size of the icon */
+    height: 150px;
+    border-radius: 50%; /* Optional: Make the icon circular */
     margin-bottom: 20px;
+}
+
+footer {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
 }
