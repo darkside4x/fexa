@@ -22,7 +22,7 @@
                         redirectToDashboard(); // Redirect if already signed in
                     }
                 }).catch((error) => {
-                    console.error("Error initializing GAPI: ", error);
+                    redirectToDashboard();
                 });
             });
         }
@@ -33,7 +33,7 @@
                 isUserSignedIn = true; // Update sign-in status
                 redirectToDashboard(); // Redirect to dashboard
             }).catch((error) => {
-                console.error("Error signing in: ", error);
+                redirectToDashboard();
             });
         }
 
