@@ -3,33 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apis.google.com; connect-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline'; object-src 'none';">
-    <title>Gmail Login</title>
-    <script src="https://apis.google.com/js/api.js" async defer></script>
-    <script>
-        function initClient() {
-            gapi.load('client:auth2', () => {
-                gapi.auth2.init({
-                    client_id: '998151195957-65s2khsrr16mqlta7ddau30up4bf30hb.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email'
-                }).then(() => {
-                    console.log("GAPI initialized");
-                });
-            });
-        }
-
-        function handleAuthClick() {
-            gapi.auth2.getAuthInstance().signIn().then((user) => {
-                console.log("User signed in: ", user);
-                window.location.href = "/dash.html";
-            }).catch((error) => {
-                console.error("Error signing in: ", error);
-            });
-        }
-    </script>
+    <title>Login with Gmail</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
 </head>
-<body onload="initClient()">
-    <h1>Login with Gmail</h1>
-    <button id="loginButton" onclick="handleAuthClick()">Login with Gmail</button>
+<body>
+    <div class="container">
+        <h1>Login with Gmail</h1>
+        <button id="loginButton" class="btn">Login with Gmail</button>
+    </div>
 </body>
 </html>
