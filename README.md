@@ -1,5 +1,3 @@
-Here’s an **animated `README.md`** file designed to make your GitHub project stand out. It incorporates markdown styling, GitHub badges, and animated GIFs to visually appeal and enhance user engagement.
-
 ### **README.md for `fexa-feedback-automation`**
 
 ```markdown
